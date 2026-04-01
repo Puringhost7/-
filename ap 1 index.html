@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>From Purin's Ghost to Kiyo's Ghost – Special Message 🖤</title>
+
+<style>
+body {
+  display:flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  font-family:sans-serif;
+  background:#f0f8ff;
+  overflow: hidden;
+}
+
+#box {
+  cursor:pointer;
+  font-size:24px;
+  padding:20px 40px;
+  border:2px solid black;
+  border-radius:12px;
+  text-align:center;
+  transition: all 0.2s ease;
+  margin-bottom:20px;
+  position: relative;
+}
+
+#openButton {
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 2px solid black;
+  background: #fff;
+  transition: all 0.2s ease;
+}
+
+#openButton:disabled {
+  opacity:0.5;
+  cursor: not-allowed;
+}
+
+.bounce {
+  transform: scale(1.2) rotate(5deg);
+}
+
+.ghost {
+  animation: ghostWiggle 0.5s ease;
+}
+
+@keyframes ghostWiggle {
+  0% {transform: rotate(0deg);}
+  25% {transform: rotate(5deg);}
+  50% {transform: rotate(-5deg);}
+  75% {transform: rotate(5deg);}
+  100% {transform: rotate(0deg);}
+}
+
+.float-emoji {
+  position: absolute;
+  font-size: 30px;
+  animation: floatUp 1s ease forwards;
+}
+
+@keyframes floatUp {
+  0% {opacity:1; transform: translateY(0px) scale(1);}
+  100% {opacity:0; transform: translateY(-100px) scale(1.5);}
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: red;
+  top: 50%;
+  left: 50%;
+  opacity: 1;
+  animation: confettiFall 2s ease forwards;
+}
+
+@keyframes confettiFall {
+  0% {transform: translate(0,0) rotate(0deg);}
+  100% {transform: translate(var(--x), 500px) rotate(360deg); opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div id="box">
+🎁 開けてみてね<br>（ちょっと大事なもの）
+</div>
+
+<button id="openButton">ここをクリックしてね</button>
+
+<!-- Audio for final message -->
+<audio id="bgm" src="C:\Users\DELL\index.html\index.html\New folder\Kadhalar Dhinam Bgm Violin.mp3"></audio>
+
+<script>
+let step = 0;
+const box = document.getElementById("box");
+const button = document.getElementById("openButton");
+const bgm = document.getElementById("bgm");
+
+// Bounce effect
+function bounceEffect() {
+  box.classList.add("bounce", "ghost");
+  setTimeout(() => box.classList.remove("bounce","ghost"), 500);
+}
+
+// Floating emoji effect
+function floatEmoji(emoji) {
+  const span = document.createElement("span");
+  span.className = "float-emoji";
+  span.style.left = Math.random()*80 + "%";
+  span.style.top = "50%";
+  span.innerText = emoji;
+  document.body.appendChild(span);
+  setTimeout(()=> span.remove(), 1200);
+}
+
+// Confetti effect
+function confetti() {
+  for(let i=0;i<50;i++){
+    const c = document.createElement("div");
+    c.className = "confetti";
+    const x = (Math.random()*400 - 200) + "px";
+    c.style.setProperty("--x", x);
+    c.style.background = `hsl(${Math.random()*360}, 80%, 60%)`;
+    document.body.appendChild(c);
+    setTimeout(()=> c.remove(), 2000);
+  }
+}
+
+// Typewriter effect with end callback
+function typewriterEffectWithEnd(lines, delay = 120, callback) { // slower
+  box.innerHTML = "";
+  let lineIndex = 0;
+
+  function showLine() {
+    if(lineIndex >= lines.length){
+      if(callback) callback(); // stop BGM when done
+      return;
+    }
+    let line = lines[lineIndex];
+    let charIndex = 0;
+    const span = document.createElement("span");
+    box.appendChild(span);
+
+    function showChar() {
+      if(charIndex < line.length){
+        span.innerHTML += line[charIndex];
+        charIndex++;
+        setTimeout(showChar, delay);
+      } else {
+        box.appendChild(document.createElement("br"));
+        lineIndex++;
+        setTimeout(showLine, delay*2);
+      }
+    }
+    showChar();
+  }
+  showLine();
+}
+
+// Main logic
+function openBox() {
+  bounceEffect();
+
+  if(step === 0){
+    box.innerHTML = "📦<br><br>……何もない 😝🤣 👻";
+    floatEmoji("😝");
+    floatEmoji("🤣");
+    floatEmoji("👻");
+    step = 1;
+    button.disabled = true;
+    setTimeout(()=> button.disabled = false, 10000);
+    button.innerText = "またクリックしてね";
+
+  } else if(step === 1){
+    box.innerHTML = "😏<br><br>エイプリルフール 😜 👻";
+    floatEmoji("😏");
+    floatEmoji("😜");
+    floatEmoji("👻");
+    step = 2;
+    button.innerText = "今開ける";
+
+  } else if(step === 2){
+    const messageLines = [
+      "from purin's ghost to kiyo's ghost🖤",
+      "ずっと頑張っているのを見ていたよ。",
+      "だから、努力とあきらめない気持ちに「ありがとう」って伝えたかった。",
+      "本当にお疲れさま、Kiyo's Ghost 👻",
+      "あまり自分を追い込みすぎないでね。",
+      "自分に優しくしてあげて。",
+      "ちゃんとご飯を食べて、よく寝てね。",
+      "勉強も、無理しすぎないでね。",
+      "今日は新しい月の始まりだから、気持ちをリセットして、 👻💨",
+      "自分のペースで進んでいこう 🕷🪦",
+      "きっといい方向にいくって信じてるよ 😊",
+      "これからもずっと応援してるね 🐶",
+      "🦫🦖"
+    ];
+
+    confetti();
+
+    // Play BGM only during message
+    bgm.play().catch(e => console.log("Autoplay prevented"));
+
+    typewriterEffectWithEnd(messageLines, 120, () => {
+      bgm.pause();
+      bgm.currentTime = 0;
+    });
+
+    step = 3;
+    button.disabled = true;
+  }
+}
+
+button.addEventListener("click", openBox);
+</script>
+
+</body>
+</html>
